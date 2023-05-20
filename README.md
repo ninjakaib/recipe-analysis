@@ -1,4 +1,4 @@
-# rDatà la Carte: Serving Up Delectable Insights from Recipe Reviews
+# Datà la Carte: Serving Up Delectable Insights from Recipe Reviews
 An exploration of a dataset of recipes and reviews
 
 ---
