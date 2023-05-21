@@ -66,44 +66,12 @@ The line plot provides a visualization of the distribution of ratings over time,
 From the plot, we observe that the proportions of ratings 3, 4, and 5 are relatively stable over the years, suggesting that overall, the quality of recipes or user satisfaction hasn't drastically changed. However, a notable trend starting around 2012 shows an increase in the proportion of ratings that are 1 or 2. This might suggest an increased willingness of users to rate recipes negatively or perhaps a decline in recipe quality. This growing trend of low ratings may have potential implications for user engagement and recipe submissions.
 
 <iframe src="assets/avgrating_time.html" width=800 height=600 frameBorder=0></iframe>
-The scatterplot visualizes the relationship between the mean rating and the review date. The color of the points represents the number of reviews, with darker hues indicating a higher number of reviews.
+The scatterplot visualizes the relationship between the mean rating and the review date. The color of the points represents the number of reviews, with lighter hues indicating a higher number of reviews.
 
-The chart reveals a downward trend, with the fitted line indicating a negative correlation between time and mean rating (r^2 = 0.459). This implies that over time, average ratings for recipes have been decreasing. It's important to consider this trend, as it could reflect shifts in user behavior or expectations, or changes in the quality of recipe submissions. Further analysis might be necessary to investigate the causes of this trend.
+The chart reveals a downward trend, with the fitted line indicating a negative correlation between time and mean rating. This implies that over time, average ratings for recipes have been decreasing. It's important to consider this trend, as it could reflect shifts in user behavior or expectations, or changes in the quality of recipe submissions. Further analysis might be necessary to investigate the causes of this trend.
 
 ### Interesting Aggregates
 Here I found the most popular ingredients and tags. This was done by grouping individual recipes, exploding the ingredients and tags and counting unique ones, then grouping again by individual ingredient or tag to find the mean rating of recipes they appear in. We can then filter by the minimum number of recipes they must appear in. This is necessary because if we did not do this, some obscure ingredient that only appears in a single recipe with a single rating of 5 could be at the top of the list, and this would not be a good representation of the overall data. The two tables showing most popular ingredients were filtered with a minimum recipe count of 200 and 750, respectively. The tags tables were for 750 and 2000 minimum recipes. The lower our filter number, we can expect to see less common but perhaps more creative or unique ingredients/tags, and higher filter numbers will give us the more common, widely loved ingredients like butter or salt.
-
-| ingredients       |   mean_rating |   count |
-|:------------------|--------------:|--------:|
-| goat cheese       |       4.82336 |     385 |
-| grape tomatoes    |       4.82325 |     318 |
-| cranberry juice   |       4.81746 |     254 |
-| vanilla ice cream |       4.81568 |     379 |
-| kalamata olive    |       4.80605 |     249 |
-
-| ingredients    |   mean_rating |   count |
-|:---------------|--------------:|--------:|
-| feta cheese    |       4.79484 |     998 |
-| whipping cream |       4.75569 |     818 |
-| bacon          |       4.75162 |    2667 |
-| fresh cilantro |       4.75026 |    1833 |
-| avocado        |       4.74817 |     907 |
-
-| tags      |   mean_rating |   count |
-|:----------|--------------:|--------:|
-| smoothies |       4.78429 |     787 |
-| grilling  |       4.78379 |    1300 |
-| beverages |       4.78227 |    4573 |
-| barbecue  |       4.77824 |     999 |
-| cocktails |       4.77262 |    1840 |
-
-| tags       |   mean_rating |   count |
-|:-----------|--------------:|--------:|
-| beverages  |       4.78227 |    4573 |
-| summer     |       4.75965 |    2775 |
-| sandwiches |       4.74887 |    2182 |
-| salads     |       4.74545 |    5206 |
-| tomatoes   |       4.74528 |    2190 |
 
 |     |     |
 | --- | --- |
@@ -118,7 +86,40 @@ These tables can help us understand which specific tags and ingredients might be
 ## Assessment of Missingness
 
 ### NMAR Analysis
-I performed an analysis to determine whether the data is Not Missing At Random (NMAR)...
+First, lets see the percentage of missing data in each column by running this code:
+```python
+missing = {}
+for col in (list(recipes.columns) + list(reviews.columns)):
+    missing[col] = df[col].isna().sum() / df.shape[0] * 100
+missing = dict(sorted(missing.items(), key=lambda x: x[1], reverse=True))
+missing
+```
+```
+{'rating': 6.413882241531551,
+ 'description': 0.04862879592541878,
+ 'review': 0.02474096634802008,
+ 'name': 0.0004265683853106911,
+ 'user_id': 0.0004265683853106911,
+ 'recipe_id': 0.0004265683853106911,
+ 'date': 0.0004265683853106911,
+ 'id': 0.0,
+ 'minutes': 0.0,
+ 'contributor_id': 0.0,
+ 'submitted': 0.0,
+ 'tags': 0.0,
+ 'nutrition': 0.0,
+ 'n_steps': 0.0,
+ 'steps': 0.0,
+ 'ingredients': 0.0,
+ 'n_ingredients': 0.0}
+ ```
+ 
+ 
+Although the `rating` column has the highest proportion of missing data, it appears that the missingness in the `rating` column is more likely to be Missing At Random (MAR) rather than NMAR. This is because users might choose to write a review without rating the recipe, irrespective of what their potential rating could have been. They could either not have tried the recipe yet or simply chosen not to leave a rating. In both cases, the missingness does not seem to depend on the unobserved ratings, but rather on factors that could potentially be observed (like whether they tried the recipe or not).
+
+However, a potential NMAR column might be `description`. While it has a low proportion of missing values, it is conceivable that missing descriptions could be related to the actual, unobserved descriptions themselves. For example, if a recipe is simple and straightforward, a user might choose not to include a description because they feel it's unnecessary or redundant. In this case, the missingness in `description` could be dependent on the unobserved data (the unwritten descriptions), which would make this NMAR.
+
+To fully confirm this, we would need additional data, such as user surveys or a mechanism of logging why users chose not to leave a description, which would allow us to better understand the factors influencing the presence or absence of a description. Until such data is available, any conclusions regarding NMAR data must remain tentative.
 
 ### Missingness Dependency
 Then, I checked whether missingness in some variables depends on others...
