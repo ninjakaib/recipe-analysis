@@ -48,7 +48,16 @@ The columns `nutrition`, `ingredients`, and `tags` contained lists represented a
 This histogram represents the distribution of ratings given to the recipes. From the plot, it's evident that the majority of the ratings are a perfect score of 5. This could suggest that users are more inclined to rate a recipe only if they had a positive experience or found the recipe particularly enjoyable. Lower ratings, from 1 to 4, are significantly less common. This trend could indicate a potential bias in the rating system where users might only choose to rate when they are exceptionally satisfied. It's important to consider this potential bias when analyzing the impact of different variables on the rating.
 
 <iframe src="assets/review_count_dist.html" width=800 height=600 frameBorder=0></iframe>
-The second histogram demonstrates the distribution of the number of ratings each recipe received. The majority of the recipes have received only one rating, revealing that a large proportion of recipes in the dataset have limited feedback from users. As the number of ratings increase, the number of recipes receiving that many ratings drops dramatically, creating a highly right-skewed distribution. This pattern suggests that only a small subset of recipes garner a lot of user attention and feedback, potentially due to factors like popularity, visibility, or quality of the recipe. It's crucial to consider this wide variance in the number of ratings per recipe when trying to understand the overall rating system.
+The second histogram demonstrates the distribution of the number of ratings each recipe received. The majority of the recipes have received only one rating, revealing that a large proportion of recipes in the dataset have limited feedback from users. As the number of ratings increase, the number of recipes receiving that many ratings drops dramatically, creating a highly right-skewed distribution. This pattern suggests that only a small subset of recipes garner a lot of user attention and feedback, potentially due to factors like popularity, visibility, or quality of the recipe. It's crucial to consider this wide variance in the number of ratings per recipe when trying to understand the overall rating system. While we can't make any conclusions about the relationship between the two variables quite yet, one might speculate that a majority of recipes have a single review with a rating of 5, and by looking at this code:
+
+```python
+len(df[(df['rating']==5) & (df['review_count']==1)])/len(recipes)
+```
+```
+0.32048650068033707
+```
+We see that quite a high proportion of those recipes meet that criteria. We should keep this in mind when reviewing the results of any further analyses related to these columns.
+
 
 ### Bivariate Analysis
 <iframe src="assets/ratingsproportion_time.html" width=800 height=600 frameBorder=0></iframe>
@@ -95,6 +104,12 @@ Here I found the most popular ingredients and tags. This was done by grouping in
 | sandwiches |       4.74887 |    2182 |
 | salads     |       4.74545 |    5206 |
 | tomatoes   |       4.74528 |    2190 |
+
+|     |     |
+| --- | --- |
+| `<table border="1" class="dataframe"><thead><tr style="text-align: right;"><th></th><th>mean_rating</th><th>count</th></tr><tr><th>ingredients</th><th></th><th></th></tr></thead><tbody><tr><th>goat cheese</th><td>4.823362</td><td>385</td></tr><tr><th>grape tomatoes</th><td>4.823251</td><td>318</td></tr><tr><th>cranberry juice</th><td>4.817460</td><td>254</td></tr><tr><th>vanilla ice cream</th><td>4.815678</td><td>379</td></tr><tr><th>kalamata olive</th><td>4.806052</td><td>249</td></tr></tbody></table>` | `<table border="1" class="dataframe"><thead><tr style="text-align: right;"><th></th><th>mean_rating</th><th>count</th></tr><tr><th>ingredients</th><th></th><th></th></tr></thead><tbody><tr><th>feta cheese</th><td>4.794836</td><td>998</td></tr><tr><th>whipping cream</th><td>4.755685</td><td>818</td></tr><tr><th>bacon</th><td>4.751624</td><td>2667</td></tr><tr><th>fresh cilantro</th><td>4.750262</td><td>1833</td></tr><tr><th>avocado</th><td>4.748168</td><td>907</td></tr></tbody></table>` |
+| `<table border="1" class="dataframe"><thead><tr style="text-align: right;"><th></th><th>mean_rating</th><th>count</th></tr><tr><th>tags</th><th></th><th></th></tr></thead><tbody><tr><th>smoothies</th><td>4.784287</td><td>787</td></tr><tr><th>grilling</th><td>4.783791</td><td>1300</td></tr><tr><th>beverages</th><td>4.782271</td><td>4573</td></tr><tr><th>barbecue</th><td>4.778239</td><td>999</td></tr><tr><th>cocktails</th><td>4.772616</td><td>1840</td></tr></tbody></table>` | `<table border="1" class="dataframe"><thead><tr style="text-align: right;"><th></th><th>mean_rating</th><th>count</th></tr><tr><th>tags</th><th></th><th></th></tr></thead><tbody><tr><th>beverages</th><td>4.782271</td><td>4573</td></tr><tr><th>summer</th><td>4.759649</td><td>2775</td></tr><tr><th>sandwiches</th><td>4.748871</td><td>2182</td></tr><tr><th>salads</th><td>4.745446</td><td>5206</td></tr><tr><th>tomatoes</th><td>4.745283</td><td>2190</td></tr></tbody></table>` |
+
 
 These tables can help us understand which specific tags and ingredients might be associated with higher ratings, but more importantly, they can help me find new delicious ingredients and types of food to try cooking at home!
 
