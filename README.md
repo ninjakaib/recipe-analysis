@@ -206,31 +206,5 @@ At a significance level of 0.01, we reject the null hypothesis that the distribu
 <iframe src="assets/ingredients_time.html" width=800 height=600 frameBorder=0></iframe>
 <iframe src="assets/health_nutrients.html" width=800 height=600 frameBorder=0></iframe>
 
-#### Statistical Breakdown of All Categories Conditional on Health
-|                          |   ('value', 'count') |   ('value', 'mean') |   ('value', 'std') |   ('value', 'min') |   ('value', '25%') |   ('value', '50%') |   ('value', '75%') |   ('value', 'max') |
-|:-------------------------|---------------------:|--------------------:|-------------------:|-------------------:|-------------------:|-------------------:|-------------------:|-------------------:|
-| (False, 'cals')          |                33413 |           434.411   |         421.431    |                  0 |              178.8 |              325.8 |              538.2 |            2519.3  |
-| (False, 'carbs')         |                33413 |            12.9487  |          16.8273   |                  0 |                4   |                9   |               16   |             113    |
-| (False, 'fat')           |                33413 |            33.9903  |          39.1093   |                  0 |               10   |               23   |               43   |             218    |
-| (False, 'minutes')       |                33413 |            69.1156  |         156.961    |                  1 |               20   |               40   |               65   |            1740    |
-| (False, 'n_ingredients') |                33413 |             9.81199 |           3.91323  |                  2 |                7   |                9   |               12   |              23    |
-| (False, 'n_steps')       |                33413 |            10.7715  |           6.5854   |                  1 |                6   |               10   |               14   |              45    |
-| (False, 'protein')       |                33413 |            33.6811  |          36.1453   |                  0 |                7   |               20   |               52   |             173    |
-| (False, 'rating')        |                32258 |             4.66635 |           0.684595 |                  1 |                5   |                5   |                5   |               5    |
-| (False, 'sat_fat')       |                33413 |            42.255   |          51.8739   |                  0 |                9   |               26   |               55   |             285.72 |
-| (False, 'sodium')        |                33413 |            26.6084  |          33.1437   |                  0 |                6   |               16   |               34   |             193    |
-| (False, 'sugar')         |                33413 |            60.7312  |         112.261    |                  0 |                9   |               24   |               62   |             757    |
-| (True, 'cals')           |                50369 |           390.073   |         379.594    |                  0 |              167.2 |              294.3 |              474.2 |            2519.3  |
-| (True, 'carbs')          |                50369 |            12.7403  |          16.3933   |                  0 |                4   |                9   |               16   |             113    |
-| (True, 'fat')            |                50369 |            28.2284  |          34.8465   |                  0 |                7   |               18   |               36   |             218    |
-| (True, 'minutes')        |                50369 |            75.5112  |         163.337    |                  0 |               20   |               35   |               64   |            1740    |
-| (True, 'n_ingredients')  |                50369 |             8.80387 |           3.66143  |                  1 |                6   |                8   |               11   |              23    |
-| (True, 'n_steps')        |                50369 |             9.62632 |           5.92941  |                  1 |                6   |                8   |               12   |              45    |
-| (True, 'protein')        |                50369 |            30.8153  |          34.1049   |                  0 |                6   |               17   |               47   |             173    |
-| (True, 'rating')         |                48915 |             4.64213 |           0.709554 |                  1 |                4   |                5   |                5   |               5    |
-| (True, 'sat_fat')        |                50369 |            34.2176  |          46.4421   |                  0 |                5   |               18   |               44   |             285.72 |
-| (True, 'sodium')         |                50369 |            23.4908  |          31.1976   |                  0 |                4   |               13   |               30   |             193    |
-| (True, 'sugar')          |                50369 |            59.1145  |         108.717    |                  0 |                9   |               23   |               61   |             757    |
-
 
 Thank you for visiting my project! Feel free to contact me for any further questions or clarifications.
