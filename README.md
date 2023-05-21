@@ -121,7 +121,44 @@ However, a potential NMAR column might be `description`. While it has a low prop
 To fully confirm this, we would need additional data, such as user surveys or a mechanism of logging why users chose not to leave a description, which would allow us to better understand the factors influencing the presence or absence of a description. Another test we could perform is a permuatation test of the missingness in `description` against the `n_steps` column, as it is somewhat related to the complexity of a recipe.
 
 ### Missingness Dependency
-Then, I checked whether missingness in some variables depends on others...
+#### Minutes
+I performed permutation tests to determine whether the missingness in `description` was dependent on another column or not. Lets start by looking at the results of the test for the `minutes` column.
+
+<iframe src="assets/missingdesc_perm_minutes.html" width=800 height=600 frameBorder=0></iframe>
+
+The test statistic of choice for this permutation test was the difference in means for minutes when the description is missing and when it is not missing. `minutes` is a numerical distribution, so the difference in group means is an acceptable test stat. We can see the observed difference was about -7.2 minutes, and gives a p-value of 0.651, not even close to being statistically significant at any level.
+
+<iframe src="assets/missingdesc_kde_mins.html" width=800 height=600 frameBorder=0></iframe>
+
+After looking at the kernel desnity estimate for the distribution of minutes among the two groups, they look different enough that it would not be unreasonable to perform another permutation test using the KS statistic just to be sure.
+
+```python
+ks_2samp(dfm.loc[dfm['missing']==True, 'minutes'], dfm.loc[dfm['missing']==False, 'minutes'])
+```
+```
+KstestResult(statistic=0.09399256736040223, pvalue=0.25011763931689807)
+```
+From these results, we can conclude it is not likely the missing values in `description` depend on `minutes`.
+
+#### Number of Ingredients
+Next, I chose to do the test again but with the `n_ingredients` column.
+
+<iframe src="assets/missingdesc_perm_ingredients.html" width=800 height=600 frameBorder=0></iframe>
+
+Once again we choose the difference in means as a test statistic since the number of ingredients is also a numerical distribution. The observed difference between the groups was roughly -1.1, and when permutating the missing labels and plotting the empircal distribution of difference in means, we can see this results in a p-value of just 0.00033. This is low enough to be statistically significant at any commonly used significance level (0.05 or 0.01), and we reject the null hypothesis that the mean number of ingredients is the same for recipes with or without a description.
+
+<iframe src="assets/missingdesc_kde_ingredients.html" width=800 height=600 frameBorder=0></iframe>
+
+The KDE for the two groups looks very different this time, and after performing another KS test
+
+```python
+ks_2samp(dfm.loc[dfm['missing']==True, 'n_ingredients'], dfm.loc[dfm['missing']==False, 'n_ingredients'])
+```
+```
+KstestResult(statistic=0.14958473579762732, pvalue=0.010841034077387445)
+```
+Again we see a low p-value and can reject the null at a significance level of 5%. From these results, we can conclude that the missingness in `description` is probably MAR. It can't be (or is extremely unlikely to be) MCAR, since this permutation test shows a statistically siginicant result.
+
 
 ---
 
