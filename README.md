@@ -230,10 +230,16 @@ To get an idea of the distribution of individual variables...
 
 Here are some of the key findings:
 
+<iframe src="assets/rating_dist.html" width=800 height=600 frameBorder=0></iframe>
+<iframe src="assets/review_count_dist.html" width=800 height=600 frameBorder=0></iframe>
+
 ### Bivariate Analysis
 I then looked at the relationship between different pairs of variables...
 
 Here are some of the key findings:
+
+<iframe src="assets/ratingsproportion_time.html" width=800 height=600 frameBorder=0></iframe>
+<iframe src="assets/avgrating_time.html" width=800 height=600 frameBorder=0></iframe>
 
 ### Interesting Aggregates
 Here I found the most popular ingredients and tags. This was done by grouping individual recipes, exploding the ingredients and tags and counting unique ones, then grouping again by individual ingredient or tag to find the mean rating of recipes they appear in. We can then filter by the minimum number of recipes they must appear in. This is necessary because if we did not do this, some obscure ingredient that only appears in a single recipe with a single rating of 5 could be at the top of the list, and this would not be a good representation of the overall data. The two tables showing most popular ingredients were filtered with a minimum recipe count of 200 and 750, respectively. The tags tables were for 750 and 2000 minimum recipes. The lower our filter number, we can expect to see less common but perhaps more creative or unique ingredients/tags, and higher filter numbers will give us the more common, widely loved ingredients like butter or salt.
